@@ -256,6 +256,8 @@ nnoremap <silent> pep :call LanguageClient#textDocument_formatting()<CR>
 "
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
+set noshowmode
+let g:echodoc#enable_at_startup = 1
 
 
 "======================
