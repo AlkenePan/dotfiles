@@ -1,11 +1,15 @@
+(defvar best-gc-cons-threshold
+  4000000
+  "Best default gc threshold value. Should NOT be too big!")
 ;; Minimal UI
-(scroll-bar-mode -1)
 (menu-bar-mode   -1)
 (if (display-graphic-p)
     (progn
+      (scroll-bar-mode -1)
       (tool-bar-mode  -1)
       (tooltip-mode    -1)))
 (global-linum-mode 1)
+(set-face-attribute 'default nil :height 190)
 
 
 ;; editor behave
@@ -33,10 +37,15 @@
 (require 'use-package)
 
 ;; Theme
-(use-package doom-themes
+;;(use-package doom-themes
+;;  :ensure t
+;;  :config
+;;  (load-theme 'doom-one t))
+
+(use-package spacemacs-theme
   :ensure t
-  :config
-  (load-theme 'doom-one t))
+  :defer t
+  :init (load-theme 'spacemacs-dark t))
 
 
 ;; Vim mode
@@ -65,6 +74,8 @@
   (setq projectile-require-project-root nil)
   :config
   (projectile-mode 1))
+(setq projectile-project-search-path '("~/projects/"))
+
 
 ;; Helm Projectile
 (use-package helm-projectile
@@ -95,7 +106,7 @@
   ;; "/"   '(counsel-rg :which-key "ripgrep") ; You'll need counsel package for this
   "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
   "SPC" '(helm-M-x :which-key "M-x")
-  "pf"  '(helm-find-file :which-key "find files")
+  "pf"  '(helm-find-files :which-key "find files")
   ;; Buffers
   "bb"  '(helm-buffers-list :which-key "buffers list")
   ;; Window
@@ -122,6 +133,7 @@
 (use-package lsp-mode
   :ensure t
   :init
+  (setq lsp-print-io t)
   (add-hook 'prog-major-mode #'lsp-prog-major-mode-enable)
   (add-hook 'python-mode-hook 'lsp))
 
