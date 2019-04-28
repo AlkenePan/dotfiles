@@ -74,7 +74,7 @@
   (setq projectile-require-project-root nil)
   :config
   (projectile-mode 1))
-(setq projectile-project-search-path '("~/projects/"))
+(setq projectile-project-search-path '("~/project/"))
 
 
 ;; Helm Projectile
@@ -132,10 +132,16 @@
 ;; LSP
 (use-package lsp-mode
   :ensure t
+  ;;:command lsp
   :init
   (setq lsp-print-io t)
   (add-hook 'prog-major-mode #'lsp-prog-major-mode-enable)
-  (add-hook 'python-mode-hook 'lsp))
+  (add-hook 'python-mode-hook #'lsp)
+
+(use-package lsp-imenu
+  :ensure t
+  :init
+  (add-hook 'lsp-after-open-hook 'lsp-enable-imenu))
 
 (use-package lsp-ui
   :ensure t
@@ -174,9 +180,9 @@
 	(company-complete-common))))
 
 (use-package company-lsp
-:ensure t
-:init
-(push 'company-lsp company-backends))
+  :ensure t
+  :init
+  (push 'company-lsp company-backends))
  
 ;; Powerline
 (use-package spaceline
