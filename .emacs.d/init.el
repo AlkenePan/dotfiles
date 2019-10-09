@@ -21,6 +21,12 @@
 (setq show-paren-delay 0)
 (show-paren-mode  1)
 
+;; config emacs 
+;; C-h v exec-path
+(add-to-list 'exec-path "/usr/local/bin")
+(add-to-list 'exec-path "~/.local/bin")
+
+
 ;; Package configs
 (require 'package)
 (setq package-enable-at-startup nil)
@@ -129,6 +135,12 @@
   :ensure t
   :init (global-flycheck-mode))
 
+(require 'lsp)
+(require 'lsp-haskell)
+
+(setq lsp-haskell-process-path-hie "hie-wrapper")
+
+
 ;; LSP
 (use-package lsp-mode
   :ensure t
@@ -137,11 +149,12 @@
   (setq lsp-print-io t)
   (add-hook 'prog-major-mode #'lsp-prog-major-mode-enable)
   (add-hook 'python-mode-hook #'lsp)
+  (add-hook 'haskell-mode-hook #'lsp))
 
-(use-package lsp-imenu
-  :ensure t
-  :init
-  (add-hook 'lsp-after-open-hook 'lsp-enable-imenu))
+;;(use-package lsp-imenu
+;;  :ensure t
+;;  :init
+;;  (add-hook 'lsp-after-open-hook 'lsp-enable-imenu))
 
 (use-package lsp-ui
   :ensure t
@@ -183,7 +196,7 @@
   :ensure t
   :init
   (push 'company-lsp company-backends))
- 
+
 ;; Powerline
 (use-package spaceline
   :ensure t
@@ -209,6 +222,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
     (helm-projectile projectile xr which-key use-package helm general evil doom-themes))))
