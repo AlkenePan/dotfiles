@@ -205,6 +205,9 @@ set notimeout
 set ttimeout
 set ttimeoutlen=100
 
+let g:python_host_prog = "/usr/local/bin/python2"
+let g:python3_host_prog = "/usr/local/bin/python3"
+
 "============================
 " plug
 "
@@ -224,6 +227,8 @@ Plug 'Shougo/echodoc'
 " Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'roxma/nvim-yarp'
+Plug 'cespare/vim-toml'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " Initialize plugin system
 call plug#end()
 filetype plugin indent on
@@ -242,14 +247,32 @@ let g:airline_theme= 'luna'
 set hidden
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_hoverPreview = "Never"
+let g:LanguageClient_hasSnippetSupport = 0
+set completeopt-=preview
+
 let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls', '--log-file=/tmp/LanguageServer.log'],
+    \ 'go': ['gopls', '-debug'],
     \ }
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> ca :call LanguageClient#textDocument_codeAction()<CR>
 nnoremap <silent> pep :call LanguageClient#textDocument_formatting()<CR>
+
+" Go
+let g:go_def_mode='gopls'
+
+
+augroup LanguageClient_config
+  au!
+  au BufEnter * let b:Plugin_LanguageClient_started = 0
+  au User LanguageClientStarted setl signcolumn=yes
+  au User LanguageClientStarted let b:Plugin_LanguageClient_started = 1
+  au User LanguageClientStopped setl signcolumn=auto
+  au User LanguageClientStopped let b:Plugin_LanguageClient_stopped = 0
+  au CursorMoved * if b:Plugin_LanguageClient_started | sil call LanguageClient#textDocument_documentHighlight() | endif
+augroup END
 
 "=======================
 " INTEL
