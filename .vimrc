@@ -205,8 +205,8 @@ set notimeout
 set ttimeout
 set ttimeoutlen=100
 
-let g:python_host_prog = "/usr/local/bin/python2"
-let g:python3_host_prog = "/usr/local/bin/python3"
+let g:python_host_prog = "/usr/bin/python2"
+let g:python3_host_prog = "/usr/bin/python3"
 
 "============================
 " plug
@@ -217,7 +217,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
-    \ 'do': 'proxychains4 bash install.sh',
+    \ 'do': 'bash install.sh',
     \ }
 Plug 'junegunn/fzf'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -253,6 +253,10 @@ set completeopt-=preview
 let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls', '--log-file=/tmp/LanguageServer.log'],
     \ 'go': ['gopls', '-debug'],
+    \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'cuda': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'objc': ['ccls', '--log-file=/tmp/cc.log'],
     \ }
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
@@ -337,4 +341,3 @@ function! s:split_line_text_at_cursor()
   let text_before_cursor = (col('.') > 1) ? line_text[: col('.')-2] : ''
   return [text_before_cursor, text_after_cursor]
 endfunction
-
