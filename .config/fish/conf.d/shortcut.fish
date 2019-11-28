@@ -1,0 +1,10 @@
+echo -n Setting abbreviations...
+abbr g 'git'
+abbr n 'nvim'
+abbr s 'sudo'
+abbr p 'proxychains'
+abbr gy 'cd ~/go/src/youzoo'
+abbr gh 'cd ~/go/src/AgentSmith-HUB'
+abbr lock 'i3lock-fancy -pf Sauce-Code-Pro-Black-Nerd-Font-Complete -t ""'
+abbr l 'exa -lh'
+echo 'Done'
